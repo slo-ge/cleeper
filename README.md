@@ -1,6 +1,6 @@
 # cleeper
 
-**The project is currentliy WIP, so no stable version available at the moment.**
+**The project is currently WIP, so no stable version available at the moment.**
 
 cleeper is a tool for pasting images and texts of clipboard to a chrome browser view.
 It is based on the python eel library which communicates between python and the browser. 

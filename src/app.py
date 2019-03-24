@@ -6,20 +6,7 @@ import json
 from enum import IntEnum
 from utils import get_img_elem
 from utils import create_text_elem
-
-# Set web files folder and optionally specify which file types to check for eel.expose()
-#   *Default allowed_extensions are: ['.js', '.html', '.txt', '.htm', '.xhtml']
-eel.init('browser/', allowed_extensions=['.js', '.html'])
-
-clipboard_items = []
-
-
-class ClipBoardItem(object):
-    def __init__(self, clip_type, data, elem, css_classes):
-        self.clip_type = clip_type
-        self.data = data
-        self.elem = elem
-        self.css_classes = css_classes
+from typing import List
 
 
 class ClipTypes(IntEnum):
@@ -30,20 +17,37 @@ class ClipTypes(IntEnum):
     IMAGE = 2
 
 
+class ClipBoardItem(object):
+    def __init__(self, clip_type: ClipTypes, data: str, elem: str, css_classes: List):
+        self.clip_type = clip_type
+        self.data = data
+        self.elem = elem
+        self.css_classes = css_classes
+
+
+clipboard_items: List[ClipBoardItem] = []
+
+# Set web files folder and optionally specify which file types to check for eel.expose()
+#   *Default allowed_extensions are: ['.js', '.html', '.txt', '.htm', '.xhtml']
+eel.init('browser/', allowed_extensions=['.js', '.html'])
+
+
 @eel.expose
-def get_latest_from_clipboard():
+def get_latest_from_clipboard() -> str:
+    """
+
+    :return: serialized ClipBoardItem for browser
+    """
     return json.dumps(clipboard_items[-1].__dict__)
 
 
-# listen to new screenshot
+# listen to new screen shot
 def keypress_listener():
-    print("key press listener")
     while True:  # making a loop
         eel.sleep(0.01)
         if keyboard.is_pressed('ctrl+l'):  # if key 'q' is pressed
             text = pyperclip.paste()  # get the text with pyperclip
             if text:
-                # we set the text to clipboard list
                 clipboard_items.append(
                     ClipBoardItem(
                         clip_type=ClipTypes.TEXT,
@@ -53,7 +57,6 @@ def keypress_listener():
                     )
                 )
             else:
-                # we try to set the image to clipboard list
                 clipboard_items.append(
                     ClipBoardItem(
                         clip_type=ClipTypes.IMAGE,

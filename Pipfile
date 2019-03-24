@@ -13,6 +13,7 @@ jinja2 = "*"
 Pillow = "*"
 keyboard = "*"
 pyperclip = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.7"

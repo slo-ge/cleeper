@@ -4,7 +4,7 @@ import io
 from PIL import ImageGrab
 
 
-def get_img_elem():
+def get_img_elem() -> str:
     """
     get image elem from clipboard
 
@@ -22,7 +22,7 @@ def get_img_elem():
     return f'<img src="data:image/png;base64, {base64_text}" />'
 
 
-def create_text_elem(text):
+def create_text_elem(text) -> str:
     """ create text elem from text
 
     :return:

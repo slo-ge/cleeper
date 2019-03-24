@@ -1,25 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Hello, World!{% endblock %}
 {% block head_scripts %}
-    <script type="text/javascript">
-
-        function createElementFromHTML(htmlString) {
-            var div = document.createElement('div');
-            div.innerHTML = htmlString.trim();
-            return div;
-        }
-
-        // register getClipboard for python
-        eel.expose(getClipboard);
-
-        function getClipboard() {
-            let clipboardPromise = eel.get_latest_from_clipboard();
-            clipboardPromise().then((clipboardElem) => {
-                document.getElementById('clips').append(createElementFromHTML(clipboardElem));
-            });
-        }
-
-    </script>
 {% endblock %}
 {% block content %}
     <div class="content">

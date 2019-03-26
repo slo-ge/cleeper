@@ -1,9 +1,14 @@
+import DragAndDropEditor from './dnd.js';
+
+let murdl = new DragAndDropEditor();
+
 function createElementFromHTML(clipboardElemObj) {
     let div = document.createElement('div');
     div.innerHTML = clipboardElemObj.elem.trim();
     // unpack css classes
     // and set them to div
     div.classList.add(...clipboardElemObj.css_classes);
+    div.classList.add('card-remove');
     return div;
 }
 
@@ -13,8 +18,7 @@ eel.expose(getClipboard);
 function getClipboard() {
     let clipboardPromise = eel.get_latest_from_clipboard();
     clipboardPromise().then((clipboardElem) => {
-        document.getElementById('clips').append(
-            createElementFromHTML(JSON.parse(clipboardElem))
-        );
+        murdl.add(createElementFromHTML(JSON.parse(clipboardElem)));
     });
 }
+

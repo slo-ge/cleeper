@@ -29,7 +29,7 @@ clipboard_items: List[ClipBoardItem] = []
 
 # Set web files folder and optionally specify which file types to check for eel.expose()
 #   *Default allowed_extensions are: ['.js', '.html', '.txt', '.htm', '.xhtml']
-eel.init('browser/', allowed_extensions=['.js', '.html'])
+eel.init('browser/dist') # if we set it to star nothing will work
 
 
 @eel.expose
@@ -74,5 +74,4 @@ def keypress_listener():
 
 eel.spawn(keypress_listener)
 
-eel.start('templates/app.html', size=(800, 800),
-          templates='templates')  # Start
+eel.start('index.html', size=(800, 800))  # Start

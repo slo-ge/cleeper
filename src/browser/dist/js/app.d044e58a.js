@@ -147,31 +147,31 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([88,1]);
+/******/ 	deferredModules.push([82,1]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 45:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
 
-/***/ 88:
+/***/ 82:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./src/styles/index.scss
-var styles = __webpack_require__(45);
+var styles = __webpack_require__(44);
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.string.iterator.js
-var es6_string_iterator = __webpack_require__(46);
+var es6_string_iterator = __webpack_require__(45);
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.from.js
 var es6_array_from = __webpack_require__(54);
@@ -203,18 +203,14 @@ var es6_string_trim = __webpack_require__(75);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.object.define-property.js
 var es6_object_define_property = __webpack_require__(78);
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.for-each.js
-var es6_array_for_each = __webpack_require__(79);
-
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.function.bind.js
-var es6_function_bind = __webpack_require__(84);
+var es6_function_bind = __webpack_require__(79);
 
-// EXTERNAL MODULE: ./node_modules/muuri/dist/muuri.js
-var muuri = __webpack_require__(44);
-var muuri_default = /*#__PURE__*/__webpack_require__.n(muuri);
+// EXTERNAL MODULE: ./node_modules/sortablejs/Sortable.js
+var Sortable = __webpack_require__(43);
+var Sortable_default = /*#__PURE__*/__webpack_require__.n(Sortable);
 
-// CONCATENATED MODULE: ./src/scripts/dnd.js
-
+// CONCATENATED MODULE: ./src/scripts/layout-sortablejs-controller.js
 
 
 
@@ -227,67 +223,44 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-var CONTAINER = '#clips';
-var ITEMS = '.clipped';
+var CONTAINER = 'clips';
+var ITEMS = 'clipped';
 var REMOVE_CLASS = 'card-remove';
 
-var dnd_DragAndDropEditor =
+var layout_sortablejs_controller_LayoutSortableJsController =
 /*#__PURE__*/
 function () {
-  function DragAndDropEditor() {
-    _classCallCheck(this, DragAndDropEditor);
+  function LayoutSortableJsController() {
+    _classCallCheck(this, LayoutSortableJsController);
 
-    _defineProperty(this, "_grid", null);
+    _defineProperty(this, "sortable", null);
 
-    this._grid = new muuri_default.a(CONTAINER, {
-      items: ITEMS,
-      dragEnabled: true
-    }).on('move', function () {});
+    var el = document.getElementById(CONTAINER);
+    this.sortable = Sortable_default.a.create(el, {
+      animation: 150,
+      ghostClass: 'dnd-move'
+    });
   }
 
-  _createClass(DragAndDropEditor, [{
+  _createClass(LayoutSortableJsController, [{
     key: "add",
     value: function add(elem) {
-      this._grid.add(elem);
-
-      elem.addEventListener('click', this.remove.bind(this, elem));
-    }
-    /**
-     * TODO: remove function
-     * @param elem
-     */
-
-  }, {
-    key: "remove",
-    value: function remove(elem) {//console.log('rem', elem);
-      //this._grid.remove(elem);
-      // this.updateIndices();
+      document.getElementById(CONTAINER).append(elem);
+      elem.addEventListener('click', this.clickHandler.bind(elem), false);
     }
   }, {
-    key: "updateIndices",
-    value: function updateIndices() {
-      this._grid.getItems().forEach(function (item, i) {
-        item.getElement().setAttribute('data-id', i + 1);
-        item.getElement().querySelector('.card-id').innerHTML = i + 1;
-      });
-    }
-  }, {
-    key: "elementClosest",
-    value: function elementClosest(element, selector) {
-      return element.closest(selector);
-    }
-  }, {
-    key: "grid",
-    get: function get() {
-      return this._grid;
+    key: "clickHandler",
+    value: function clickHandler(evt, elem) {
+      console.log(elem);
+      elem.remove();
     }
   }]);
 
-  return DragAndDropEditor;
+  return LayoutSortableJsController;
 }();
 
-/* harmony default export */ var dnd = (dnd_DragAndDropEditor);
-// CONCATENATED MODULE: ./src/scripts/eel.js
+/* harmony default export */ var layout_sortablejs_controller = (layout_sortablejs_controller_LayoutSortableJsController);
+// CONCATENATED MODULE: ./src/scripts/eel-controller.js
 
 
 
@@ -308,7 +281,7 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 
-var murdl = new dnd();
+var layoutController = new layout_sortablejs_controller();
 
 function createElementFromHTML(clipboardElemObj) {
   var _div$classList;
@@ -321,17 +294,16 @@ function createElementFromHTML(clipboardElemObj) {
 
   div.classList.add('card-remove');
   return div;
-} // register getClipboard for python
-
-
-eel.expose(getClipboard);
+}
 
 function getClipboard() {
   var clipboardPromise = eel.get_latest_from_clipboard();
   clipboardPromise().then(function (clipboardElem) {
-    murdl.add(createElementFromHTML(JSON.parse(clipboardElem)));
+    layoutController.add(createElementFromHTML(JSON.parse(clipboardElem)));
   });
 }
+
+eel.expose(getClipboard);
 // CONCATENATED MODULE: ./src/scripts/index.js
 
 
@@ -339,4 +311,4 @@ function getClipboard() {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.b0613fe0.js.map
+//# sourceMappingURL=app.d044e58a.js.map

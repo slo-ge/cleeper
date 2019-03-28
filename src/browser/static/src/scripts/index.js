@@ -1,2 +1,2 @@
 import '../styles/index.scss';
-import '../scripts/eel.js';
+import  './eel-controller.js';

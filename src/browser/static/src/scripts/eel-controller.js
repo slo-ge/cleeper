@@ -1,6 +1,6 @@
-import DragAndDropEditor from './dnd.js';
+import LayoutSortableJsController from "./layout-sortablejs-controller";
 
-let murdl = new DragAndDropEditor();
+let layoutController = new LayoutSortableJsController();
 
 function createElementFromHTML(clipboardElemObj) {
     let div = document.createElement('div');
@@ -12,13 +12,11 @@ function createElementFromHTML(clipboardElemObj) {
     return div;
 }
 
-// register getClipboard for python
-eel.expose(getClipboard);
-
 function getClipboard() {
     let clipboardPromise = eel.get_latest_from_clipboard();
     clipboardPromise().then((clipboardElem) => {
-        murdl.add(createElementFromHTML(JSON.parse(clipboardElem)));
+        layoutController.add(createElementFromHTML(JSON.parse(clipboardElem)));
     });
 }
 
+eel.expose(getClipboard);

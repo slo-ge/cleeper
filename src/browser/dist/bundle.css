@@ -5,30 +5,13 @@
 .clipped {
   margin: 3px; }
 
+.dnd-move {
+  background-color: beige;
+  box-shadow: 0 10px 6px -6px #777; }
+
 img {
   height: auto;
   max-width: 800px; }
-
-/* Never ever set "overflow: auto/scroll"
-   to the muuri element, stuff will break */
-#clips {
-  position: relative;
-  min-height: 95px; }
-
-.clipped {
-  position: absolute;
-  width: 100%;
-  height: auto; }
-
-.clipped.muuri-item-releasing {
-  z-index: 9998; }
-
-.clipped.muuri-item-dragging {
-  z-index: 9999;
-  cursor: move; }
-
-.clipped.muuri-item-hidden {
-  z-index: 0; }
 
 @media print {
   /* All your print styles go here */

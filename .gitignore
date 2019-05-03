@@ -72,3 +72,10 @@ node_modules
 __pycache__
 .mypy_cache/
 temp
+
+build
+dist
+
+# pyinstaller specific files
+app.spec
+cleeper.spec

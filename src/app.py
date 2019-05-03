@@ -27,10 +27,6 @@ class ClipBoardItem(object):
 
 clipboard_items: List[ClipBoardItem] = []
 
-# Set web files folder and optionally specify which file types to check for eel.expose()
-#   *Default allowed_extensions are: ['.js', '.html', '.txt', '.htm', '.xhtml']
-eel.init('browser/dist') # if we set it to star nothing will work
-
 
 @eel.expose
 def get_latest_from_clipboard() -> str:
@@ -48,6 +44,7 @@ def keypress_listener():
         if keyboard.is_pressed('ctrl+l'):  # if key 'q' is pressed
             text = pyperclip.paste()  # get the text with pyperclip
             if text:
+                text = text.replace('\r\n', '<br>')
                 clipboard_items.append(
                     ClipBoardItem(
                         clip_type=ClipTypes.TEXT,
@@ -72,6 +69,17 @@ def keypress_listener():
             pass
 
 
-eel.spawn(keypress_listener)
+def run():
+    """
+    run eel lib with keypress_listener
 
-eel.start('index.html', size=(800, 800))  # Start
+    """
+    # Set web files folder and optionally specify which file types to check for eel.expose()
+    #   *Default allowed_extensions are: ['.js', '.html', '.txt', '.htm', '.xhtml']
+    eel.init('browser/dist')  # if we set it to star nothing will work
+    eel.spawn(keypress_listener)
+    eel.start('index.html', size=(800, 800))  # Start
+
+
+if __name__ == "__main__":
+    run()

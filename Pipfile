@@ -9,7 +9,7 @@ autopep8 = "*"
 
 [packages]
 eel = "*"
-jinja2 = "*"
+Jinja2 = ">=2.10.1"
 Pillow = "*"
 keyboard = "*"
 pyperclip = "*"

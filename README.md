@@ -12,7 +12,9 @@ Currently cleeper only shows the history of the clipboard and is only tested on 
 * Run app.py 
 * Use `ctrl+l` to paste clipboard items to browser
 
-TODO: provide windows executable
+## Download Versions
 
+### Alpha Versions
+http://www.phipluspi.com/cleeper/cleeper-0.0.1-alpha.exe
   
 

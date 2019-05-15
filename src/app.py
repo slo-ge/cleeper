@@ -1,12 +1,13 @@
+import json
+from enum import IntEnum
+from typing import List
+
 import eel
 import keyboard
 import pyperclip
-import json
 
-from enum import IntEnum
-from utils import get_img_elem
 from utils import create_text_elem
-from typing import List
+from utils import get_img_elem
 
 
 class ClipTypes(IntEnum):
@@ -63,7 +64,8 @@ def keypress_listener():
                     )
                 )
 
-            eel.getClipboard()
+            print('call get_clipboard of')
+            eel.get_clipboard()
             eel.sleep(1)  # and let eel sleep do prevent multiple pastes
         else:
             pass
@@ -76,9 +78,29 @@ def run():
     """
     # Set web files folder and optionally specify which file types to check for eel.expose()
     #   *Default allowed_extensions are: ['.js', '.html', '.txt', '.htm', '.xhtml']
-    eel.init('browser/dist')  # if we set it to star nothing will work
+    develop = True
+    base_path = 'browser/app/'
+
+    if develop:
+        directory = base_path + 'src'
+        app = None
+        page = {'port': 3000}
+        flags = ['--auto-open-devtools-for-tabs --allow-file-access-from-files']
+    else:
+        directory = base_path + 'build'
+        app = 'chrome-app'
+        page = 'index.html'
+        flags = []
+
+    eel.init(directory, ['.tsx', '.ts', '.jsx', '.js', '.html'])
     eel.spawn(keypress_listener)
-    eel.start('index.html', size=(800, 800))  # Start
+
+    eel.start(page, size=(800, 800), options={
+        'mode': app,
+        'host': 'localhost',
+        'port': 8080,
+        'chrome-flags': flags
+    })  # Start
 
 
 if __name__ == "__main__":

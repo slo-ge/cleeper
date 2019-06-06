@@ -8,6 +8,7 @@ export interface LegacyClipBoardItem {
     data: string;
     elem: string;
     css_classes: Array<string>;
+    UID: string;
 
 }
 
@@ -16,12 +17,13 @@ export class ClipBoardItem {
     data: string;
     elem: string;
     cssClasses: Array<string>;
-
-    constructor(clipType: ClipTypes, data: string, elem: string, cssClasses: Array<string>) {
+    UID: string;
+    constructor(clipType: ClipTypes, data: string, elem: string, cssClasses: Array<string>, UID: string) {
         this.clipType = clipType;
         this.data = data;
         this.elem = elem;
         this.cssClasses = cssClasses;
+        this.UID = UID;
     }
 
     public static mapPythonStringDto(pythonString: string): ClipBoardItem {
@@ -30,7 +32,8 @@ export class ClipBoardItem {
             tempJson.clip_type,
             tempJson.data,
             tempJson.elem,
-            tempJson.css_classes
+            tempJson.css_classes,
+            tempJson.UID
         )
     }
 }

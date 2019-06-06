@@ -5,6 +5,7 @@ from typing import List
 import eel
 import keyboard
 import pyperclip
+import uuid
 
 from utils import create_text_elem
 from utils import get_img_elem
@@ -19,11 +20,12 @@ class ClipTypes(IntEnum):
 
 
 class ClipBoardItem(object):
-    def __init__(self, clip_type: ClipTypes, data: str, elem: str, css_classes: List):
+    def __init__(self, clip_type: ClipTypes, data: str, elem: str, css_classes: List, UID: str):
         self.clip_type = clip_type
         self.data = data
         self.elem = elem
         self.css_classes = css_classes
+        self.UID = UID
 
 
 clipboard_items: List[ClipBoardItem] = []
@@ -51,7 +53,8 @@ def keypress_listener():
                         clip_type=ClipTypes.TEXT,
                         data=text,
                         elem=create_text_elem(text),
-                        css_classes=['clipped', 'text']
+                        css_classes=['clipped', 'text'],
+                        UID=str(uuid.uuid4())
                     )
                 )
             else:
@@ -60,7 +63,8 @@ def keypress_listener():
                         clip_type=ClipTypes.IMAGE,
                         data='no data',
                         elem=get_img_elem(),
-                        css_classes=['clipped', 'image']
+                        css_classes=['clipped', 'image'],
+                        UID=str(uuid.uuid4())
                     )
                 )
 

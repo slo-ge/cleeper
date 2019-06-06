@@ -22,64 +22,24 @@ getClipboard();
 
 const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
     const result = list;
-    throw "check why this function does not sort correctly";
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     return result;
 };
-const grid = 8;
-const getItemStyle = (isDragging: any, draggableStyle: any) => ({
-    userSelect: "none",
-    padding: grid * 2,
-    margin: `0 0 ${grid}px 0`,
-    background: isDragging ? "lightgreen" : "grey",
-    ...draggableStyle
-});
-const getListStyle = (isDraggingOver: any) => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
-    padding: grid,
-    width: 250
-});
 
 interface IAppState {
     clipBoardItems: ClipBoardItem[],
 }
 
 export class App extends Component<{}, {}> {
+    public state: IAppState = {
+        clipBoardItems: []
+    }
 
     constructor(props: any) {
         super(props);
         this.getClipboard = this.getClipboard.bind(this);
         this.onDragEnd = this.onDragEnd.bind(this);
-    }
-
-    onDragEnd(result: any) {
-
-        console.log('drag end');
-        console.log(result);
-
-        // dropped outside the list
-        if (!result.destination) {
-            return;
-        }
-
-        console.log(this.state.clipBoardItems);
-
-        const items = reorder(
-            this.state.clipBoardItems || [],
-            result.source.index,
-            result.destination.index
-        );
-
-        console.log(items);
-
-        this.setState({
-            clipBoardItems: items
-        } as IAppState);
-    }
-
-    public state: IAppState = {
-        clipBoardItems: []
     }
 
     public getClipboard() {
@@ -103,18 +63,28 @@ export class App extends Component<{}, {}> {
         }
     }
 
+    onDragEnd(result: any) {
+        if (!result.destination) {
+            return;
+        }
+        const items = reorder(
+            this.state.clipBoardItems || [],
+            result.source.index,
+            result.destination.index
+        );
+        this.setState({
+            clipBoardItems: items
+        } as IAppState);
+    }
+
     get itemsList() {
         if (this.state.clipBoardItems.length > 0) {
             return this.state.clipBoardItems.map((item, index) => (
-                <Draggable key={'item-' + index} draggableId={'item-' + index} index={index}>
-                    {(provided, snapshot) => (
+                <Draggable key={item.UID} draggableId={item.UID} index={index}>
+                    {(provided) => (
                         <div ref={provided.innerRef}
                              {...provided.draggableProps}
-                             {...provided.dragHandleProps}
-                             style={getItemStyle(
-                                 snapshot.isDragging,
-                                 provided.draggableProps.style
-                             )}>
+                             {...provided.dragHandleProps}>
                             <ClipItem clipItem={item}/>
                         </div>
                     )}
@@ -133,8 +103,7 @@ export class App extends Component<{}, {}> {
                     {(provided, snapshot) => (
                         <div
                             {...provided.droppableProps}
-                            ref={provided.innerRef}
-                            style={getListStyle(snapshot.isDraggingOver)}>
+                            ref={provided.innerRef}>
                             {this.itemsList}
                             {provided.placeholder}
                         </div>

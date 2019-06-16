@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import {ClipBoardItem} from "./types";
-import ClipItem from "./components/ClipItem";
+import ClipItem from "./components/ClipItem/ClipItem";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 
 // Point Eel web socket to the instance
@@ -30,6 +30,9 @@ const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
 interface IAppState {
     clipBoardItems: ClipBoardItem[],
 }
+
+export type AppState = IAppState;
+
 
 export class App extends Component<{}, {}> {
     public state: IAppState = {

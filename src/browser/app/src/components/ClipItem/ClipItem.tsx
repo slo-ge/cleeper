@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {ClipBoardItem} from "../types";
+import {ClipBoardItem} from "../../types";
+import './ClipItem.style.scss';
 
 interface IClipItemState {
     clipItem: ClipBoardItem;
@@ -19,7 +20,7 @@ export class ClipItem extends Component<IClipItemProps, IClipItemState> {
 
     public render() {
         return (
-            <div dangerouslySetInnerHTML={{__html: this.state.clipItem.elem}}></div>
+            <div className="ClipItem" dangerouslySetInnerHTML={{__html: this.state.clipItem.elem}}></div>
         );
     }
 }

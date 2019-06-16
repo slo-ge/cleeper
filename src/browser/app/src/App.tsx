@@ -1,38 +1,18 @@
 import React, {Component} from 'react';
 import './App.css';
-import {ClipBoardItem} from "./types";
+import {ClipBoardItem, Exposables} from "./types";
 import ClipItem from "./components/ClipItem/ClipItem";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
+import store from "./store";
+import {pushItem} from "./store/actions";
+import {AppUtils} from "./App.utils";
 
-// Point Eel web socket to the instance
-export const eel = window.eel;
-eel.set_host('ws://localhost:8080');
-
-export enum Exposables {
-    getClipBoard = 'getClipBoard'
-}
-
-// dispatchEvent for Rect
-function getClipboard() {
-    window.dispatchEvent(new CustomEvent(Exposables.getClipBoard));
-}
-
-window.eel.expose(getClipboard, 'get_clipboard');
-getClipboard();
-
-const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
-    const result = list;
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
-};
+export const eel = AppUtils.initializeEel();
 
 interface IAppState {
     clipBoardItems: ClipBoardItem[],
 }
-
 export type AppState = IAppState;
-
 
 export class App extends Component<{}, {}> {
     public state: IAppState = {
@@ -41,16 +21,20 @@ export class App extends Component<{}, {}> {
 
     constructor(props: any) {
         super(props);
-        this.getClipboard = this.getClipboard.bind(this);
         this.onDragEnd = this.onDragEnd.bind(this);
+
+        store.subscribe(() => {
+            // set the state of the current clipboard items
+             this.setState({
+                clipBoardItems: store.getState().clipBoardItems
+            } as IAppState);
+        });
     }
 
     public getClipboard() {
         eel.get_latest_from_clipboard()((data: string) => {
-            let item = ClipBoardItem.mapPythonStringDto(data);
-            this.setState({
-                clipBoardItems: this.state.clipBoardItems.concat(item)
-            } as IAppState);
+            const item = ClipBoardItem.mapPythonStringDto(data);
+            store.dispatch(pushItem(item));
         });
     }
 
@@ -70,7 +54,7 @@ export class App extends Component<{}, {}> {
         if (!result.destination) {
             return;
         }
-        const items = reorder(
+        const items = AppUtils.reorder(
             this.state.clipBoardItems || [],
             result.source.index,
             result.destination.index

@@ -21,11 +21,9 @@ export class ClipItem extends Component<IClipItemProps, IClipItemState> {
 
     public render() {
         return (
-            <div>
+            <div className="ClipItem">
                 <ClipItemSettings clipItem={this.state.clipItem}/>
-                <div className="ClipItem"
-                     dangerouslySetInnerHTML={{__html: this.state.clipItem.elem}}>
-
+                <div dangerouslySetInnerHTML={{__html: this.state.clipItem.elem}}>
                 </div>
             </div>
         );

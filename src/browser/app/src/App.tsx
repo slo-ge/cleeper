@@ -88,7 +88,7 @@ export class App extends Component<{}, {}> {
             <DragDropContext onDragEnd={this.onDragEnd}>
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => (
-                        <div
+                        <div className="ItemList"
                             {...provided.droppableProps}
                             ref={provided.innerRef}>
                             {this.itemsList}

@@ -1,14 +1,13 @@
 import React, {Component} from "react";
 import {ClipBoardItem} from "../../types";
 import './ClipItem.style.scss';
-import store from "../../store";
-import {deleteItem} from "../../store/actions";
+import ClipItemSettings from "../ClipItemSettings/ClipItemSettings";
 
-interface IClipItemState {
+export interface IClipItemState {
     clipItem: ClipBoardItem;
 }
 
-interface IClipItemProps {
+export interface IClipItemProps {
     clipItem: ClipBoardItem
 }
 
@@ -18,20 +17,16 @@ export class ClipItem extends Component<IClipItemProps, IClipItemState> {
     constructor(props: IClipItemProps) {
         super(props);
         this.state = {clipItem: this.props.clipItem};
-        this.delete = this.delete.bind(this);
-    }
-
-    delete() {
-        console.log('delete');
-        store.dispatch(deleteItem(this.state.clipItem));
     }
 
     public render() {
         return (
-            <div onClick={this.delete}
-                 className="ClipItem"
-                 dangerouslySetInnerHTML={{__html: this.state.clipItem.elem}}>
+            <div>
+                <ClipItemSettings clipItem={this.state.clipItem}/>
+                <div className="ClipItem"
+                     dangerouslySetInnerHTML={{__html: this.state.clipItem.elem}}>
 
+                </div>
             </div>
         );
     }

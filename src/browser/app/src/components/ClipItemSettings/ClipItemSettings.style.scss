@@ -14,48 +14,4 @@
   &:hover {
     opacity: 1;
   }
-
-  .task {
-    padding: 10px;
-
-    &.delete {
-      border: 1px solid darkgray;
-      border-radius: 3px;
-
-    }
-
-    .yesno {
-      border: 1px solid black;
-      padding: 10px;
-      margin: 10px;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      background: rgba(244, 244, 244, 0.6);
-
-      .yes, .no {
-        padding: 2px;
-        border: 1px solid darkgray;
-        border-radius: 3px;
-        width: 40%;
-        height: 30px;
-
-        text-align: center;
-      }
-
-      .yes {
-        background: darkred;
-      }
-
-      .no {
-        background: #aea9b2;
-      }
-    }
-  }
-
 }

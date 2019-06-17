@@ -1,8 +1,16 @@
 import React, {Component} from "react";
 import './ClipItemSettings.style.scss';
 import store from "../../store";
-import {deleteItem} from "../../store/actions";
+import {deleteItem, pushItem} from "../../store/actions";
 import {IClipItemProps, IClipItemState} from "../ClipItem/ClipItem";
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import NoteAdd from '@material-ui/icons/NoteAdd';
+
 
 interface ClipItemSettingsState extends IClipItemState {
     dialog: boolean;
@@ -17,10 +25,18 @@ export class ClipItemSettings extends Component<IClipItemProps, ClipItemSettings
         };
         this.delete = this.delete.bind(this);
         this.toggle = this.toggle.bind(this);
+        this.duplicate = this.duplicate.bind(this);
     }
 
     delete() {
         store.dispatch(deleteItem(this.state.clipItem));
+    }
+
+    duplicate() {
+        // TODO: generate UUID
+        const tempItem = {...this.state.clipItem};
+        tempItem.UID = tempItem.UID + '_1';
+        store.dispatch(pushItem(tempItem));
     }
 
     toggle() {
@@ -28,24 +44,28 @@ export class ClipItemSettings extends Component<IClipItemProps, ClipItemSettings
     }
 
     public render() {
-        let toggleDeleteDialog = this.state.dialog;
-        let dialog;
-        if (toggleDeleteDialog) {
-            dialog =
-                <div className="task delete dialog" onClick={this.toggle}>
-                    <div>Are you sure</div>
-                    <div className="yesno">
-                        <span className="yes" onClick={this.delete}>yes</span>
-                        <span className="no" onClick={this.toggle}>no</span>
-                    </div>
-                </div>;
-        } else {
-            dialog = <div className="task delete" onClick={this.toggle}>Delete</div>;
-        }
+        let dialog = (
+            <div>
+                <List>
+                    <ListItem onClick={this.delete} button key="Delete">
+                        <ListItemIcon><DeleteOutlinedIcon/></ListItemIcon>
+                        <ListItemText primary="Delete"/>
+                    </ListItem>
+                    <ListItem onClick={this.duplicate} button key="duplicate">
+                        <ListItemIcon><NoteAdd/></ListItemIcon>
+                        <ListItemText primary="Duplicate"/>
+                    </ListItem>
+                </List>
+            </div>
+        );
+
 
         return (
             <div className="ClipItemSettings">
-                {dialog}
+                <div className="task delete" onClick={this.toggle}>Edit</div>
+                <Drawer anchor="top" open={this.state.dialog} onClose={this.toggle}>
+                    {dialog}
+                </Drawer>
             </div>
         );
     }

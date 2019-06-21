@@ -1,23 +1,24 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import {ClipBoardItem, Exposables} from "./types";
+import { ClipBoardItem, Exposables } from "./types";
 import ClipItem from "./components/ClipItem/ClipItem";
-import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import store from "./store";
-import {pushItem} from "./store/actions";
-import {AppUtils} from "./App.utils";
+import { pushItem } from "./store/actions";
+import { AppUtils } from "./App.utils";
 
 export const eel = AppUtils.initializeEel();
 
 interface IAppState {
     clipBoardItems: ClipBoardItem[],
 }
+
 export type AppState = IAppState;
 
 export class App extends Component<{}, {}> {
     public state: IAppState = {
         clipBoardItems: []
-    }
+    };
 
     constructor(props: any) {
         super(props);
@@ -25,7 +26,7 @@ export class App extends Component<{}, {}> {
 
         store.subscribe(() => {
             // set the state of the current clipboard items
-             this.setState({
+            this.setState({
                 clipBoardItems: store.getState().clipBoardItems
             } as IAppState);
         });
@@ -68,8 +69,9 @@ export class App extends Component<{}, {}> {
         if (this.state.clipBoardItems.length > 0) {
             return this.state.clipBoardItems.map((item, index) => (
                 <Draggable key={item.UID} draggableId={item.UID} index={index}>
-                    {(provided) => (
+                    {(provided, snapshot) => (
                         <div ref={provided.innerRef}
+                             className={snapshot.isDragging ? 'dragging': ''}
                              {...provided.draggableProps}
                              {...provided.dragHandleProps}>
                             <ClipItem clipItem={item}/>
@@ -89,8 +91,8 @@ export class App extends Component<{}, {}> {
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => (
                         <div className="ItemList"
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}>
+                             {...provided.droppableProps}
+                             ref={provided.innerRef}>
                             {this.itemsList}
                             {provided.placeholder}
                         </div>

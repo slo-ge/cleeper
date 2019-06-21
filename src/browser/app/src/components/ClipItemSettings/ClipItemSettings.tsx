@@ -10,7 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import NoteAdd from '@material-ui/icons/NoteAdd';
-
+import {AppUtils} from '../../App.utils';
 
 interface ClipItemSettingsState extends IClipItemState {
     dialog: boolean;
@@ -33,9 +33,8 @@ export class ClipItemSettings extends Component<IClipItemProps, ClipItemSettings
     }
 
     duplicate() {
-        // TODO: generate UUID
         const tempItem = {...this.state.clipItem};
-        tempItem.UID = tempItem.UID + '_1';
+        tempItem.UID = AppUtils.uuidv4();
         store.dispatch(pushItem(tempItem));
     }
 

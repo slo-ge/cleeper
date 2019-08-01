@@ -11,6 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import NoteAdd from '@material-ui/icons/NoteAdd';
 import {AppUtils} from '../../App.utils';
+import ImageEditorModal from "./Editor/ImageEditorModal";
 
 interface ClipItemSettingsState extends IClipItemState {
     dialog: boolean;
@@ -43,6 +44,12 @@ export class ClipItemSettings extends Component<IClipItemProps, ClipItemSettings
     }
 
     public render() {
+        /**
+         *  TODO: fix this fun...
+                    <ListItem key="blah">
+                        <ImageEditorModal clipItem={this.state.clipItem}/>
+                    </ListItem>
+         */
         let dialog = (
             <div>
                 <List>
@@ -54,6 +61,7 @@ export class ClipItemSettings extends Component<IClipItemProps, ClipItemSettings
                         <ListItemIcon><NoteAdd/></ListItemIcon>
                         <ListItemText primary="Duplicate"/>
                     </ListItem>
+
                 </List>
             </div>
         );

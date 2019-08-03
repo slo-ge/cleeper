@@ -28,11 +28,3 @@ def create_text_elem(text) -> str:
     :return:
     """
     return f'<p>{text}</p>'
-
-
-def get_image_from_clipboard():
-    """
-    return qtpixmap
-    
-    """
-    return ImageGrab.grabclipboard().toqpixmap()

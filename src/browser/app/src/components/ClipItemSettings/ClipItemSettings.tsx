@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import './ClipItemSettings.style.scss';
 import store from "../../store";
-import {deleteItem, pushItem} from "../../store/actions";
-import {IClipItemProps, IClipItemState} from "../ClipItem/ClipItem";
+import { deleteItem, pushItem } from "../../store/actions";
+import { IClipItemProps, IClipItemState } from "../ClipItem/ClipItem";
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,8 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import NoteAdd from '@material-ui/icons/NoteAdd';
-import {AppUtils} from '../../App.utils';
-import ImageEditorModal from "./Editor/ImageEditorModal";
+import { AppUtils } from '../../App.utils';
 
 interface ClipItemSettingsState extends IClipItemState {
     dialog: boolean;
@@ -46,9 +45,9 @@ export class ClipItemSettings extends Component<IClipItemProps, ClipItemSettings
     public render() {
         /**
          *  TODO: fix this fun...
-                    <ListItem key="blah">
-                        <ImageEditorModal clipItem={this.state.clipItem}/>
-                    </ListItem>
+         <ListItem key="blah">
+         <ImageEditorModal clipItem={this.state.clipItem}/>
+         </ListItem>
          */
         let dialog = (
             <div>

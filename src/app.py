@@ -15,5 +15,6 @@ from backend.eel.runner import run
 def start():
     run()
 
+
 if __name__ == "__main__":
     start()

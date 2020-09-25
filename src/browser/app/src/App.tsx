@@ -7,6 +7,7 @@ import store from "./store";
 import { pushItem } from "./store/actions";
 import { AppUtils } from "./App.utils";
 
+
 export const eel = AppUtils.initializeEel();
 
 interface IAppState {
@@ -23,7 +24,6 @@ export class App extends Component<{}, {}> {
     constructor(props: any) {
         super(props);
         this.onDragEnd = this.onDragEnd.bind(this);
-
         store.subscribe(() => {
             // set the state of the current clipboard items
             this.setState({

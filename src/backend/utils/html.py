@@ -1,6 +1,7 @@
 import codecs
 import io
 
+import bleach
 from PIL import ImageGrab
 
 
@@ -26,5 +27,15 @@ def create_text_elem(text) -> str:
     """ create text elem from text
 
     :return:
+
+
     """
+
+    replacer = [lambda a: bleach.linkify(a)]
+
+    for replace in replacer:
+        text = replace(text)
+
     return f'<p>{text}</p>'
+
+

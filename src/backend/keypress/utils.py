@@ -14,6 +14,23 @@ from backend.utils.html import create_text_elem, get_img_elem
 eel_logger = logging.getLogger(__name__)
 
 
+def _websocket_close(page):
+    if eel._on_close_callback is not None:
+        sockets = [p for _, p in eel._websockets]
+        eel._on_close_callback(page, sockets)
+    else:
+        eel.sleep(1.0)
+        if len(eel._websockets) == 0:
+            print('do not exit now, could be a browser refresh')
+            print('this is my custom code with uncommented the sys.exit')
+            # sys.exit('websocket closed')
+
+
+# patch function with my close method to make it not sys.extit
+# TODO: only use this for development mode
+eel._websocket_close = _websocket_close
+
+
 class ClipTypes(IntEnum):
     """
     NOTE: IntEnum Class can be serialized

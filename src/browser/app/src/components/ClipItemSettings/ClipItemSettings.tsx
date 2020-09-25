@@ -11,6 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import NoteAdd from '@material-ui/icons/NoteAdd';
 import { AppUtils } from '../../App.utils';
+import { Edit } from "@material-ui/icons";
 
 interface ClipItemSettingsState extends IClipItemState {
     dialog: boolean;
@@ -49,7 +50,7 @@ export class ClipItemSettings extends Component<IClipItemProps, ClipItemSettings
          <ImageEditorModal clipItem={this.state.clipItem}/>
          </ListItem>
          */
-        let dialog = (
+        const dialog = (
             <div>
                 <List>
                     <ListItem onClick={this.delete} button key="Delete">
@@ -57,7 +58,7 @@ export class ClipItemSettings extends Component<IClipItemProps, ClipItemSettings
                         <ListItemText primary="Delete"/>
                     </ListItem>
                     <ListItem onClick={this.duplicate} button key="duplicate">
-                        <ListItemIcon><NoteAdd/></ListItemIcon>
+                        <ListItemIcon><NoteAdd className={"fontSizeLarge"}/></ListItemIcon>
                         <ListItemText primary="Duplicate"/>
                     </ListItem>
 
@@ -68,7 +69,7 @@ export class ClipItemSettings extends Component<IClipItemProps, ClipItemSettings
 
         return (
             <div className="ClipItemSettings">
-                <div className="task delete" onClick={this.toggle}>Edit</div>
+                <div className="edit" onClick={this.toggle}><ListItemIcon><Edit/></ListItemIcon></div>
                 <Drawer anchor="top" open={this.state.dialog} onClose={this.toggle}>
                     {dialog}
                 </Drawer>

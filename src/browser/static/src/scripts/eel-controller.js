@@ -8,7 +8,6 @@ function createElementFromHTML(clipboardElemObj) {
     // unpack css classes
     // and set them to div
     div.classList.add(...clipboardElemObj.css_classes);
-    div.classList.add('card-remove');
     return div;
 }
 

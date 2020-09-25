@@ -1,0 +1,12 @@
+.ItemList {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.dragging {
+    border-radius: 3px;
+    border: 2px solid dodgerblue;
+    box-sizing: padding-box;
+    height: 200px;
+    width: 200px;
+}

@@ -15,6 +15,9 @@ keyboard = "*"
 pyperclip = "*"
 mypy = "*"
 pyinstaller = "*"
+configobj = "*"
+docopt = "==0.6.2"
+bleach = "*"
 
 [requires]
 python_version = "3.7"

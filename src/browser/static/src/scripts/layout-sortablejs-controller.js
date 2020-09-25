@@ -21,12 +21,6 @@ class LayoutSortableJsController {
 
     add(elem) {
         document.getElementById(CONTAINER).append(elem);
-        elem.addEventListener('click', this.clickHandler.bind(elem), false);
-    }
-
-    clickHandler(evt){
-        console.log(elem);
-        elem.remove();
     }
 }
 
